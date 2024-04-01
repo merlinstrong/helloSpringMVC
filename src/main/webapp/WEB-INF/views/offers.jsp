@@ -12,8 +12,29 @@
     <title>Title</title>
 </head>
 <body>
-    <c:forEach var="offer" items="${id_offers}" >
-        <p> <c:out value="${offer}"> </c:out> </p>
+    <table border="1">
+    <!-- 테이블 헤더 -->
+    <thead>
+    <tr>
+    <th>년도</th>
+    <th>학기</th>
+    <th>취득학점</th>
+    <th>상세보기</th>
+
+    </tr>
+    </thead>
+    <!-- 테이블 바디 -->
+    <tbody>
+    <c:forEach var="semesterCredits" items="${id_semesterCredits}">
+        <tr>
+
+            <td><c:out value="${semesterCredits.year}" /></td>
+            <td><c:out value="${semesterCredits.semester}" /></td>
+            <td><c:out value="${semesterCredits.totalSemesterCredits}" /></td>
+            <td><a href="${pageContext.request.contextPath}/login">상세보기</a></td>
+        </tr>
     </c:forEach>
+    </tbody>
+    </table>
 </body>
 </html>

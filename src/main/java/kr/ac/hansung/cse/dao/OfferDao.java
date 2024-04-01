@@ -22,14 +22,14 @@ public class OfferDao {
     }
 
     public int getRowCount() {
-        String sqlStatement= "select count(*) from offers";
+        String sqlStatement= "select count(*) from courses";
         return jdbcTemplate.queryForObject(sqlStatement, Integer.class);
 
     }
     //query and return a single object
     public Offer getOffer(String name) {
 
-        String sqlStatement= "select * from offers where name=?";
+        String sqlStatement= "select * from courses where name=?";
         return jdbcTemplate.queryForObject(sqlStatement, new Object[] {name},
                 new RowMapper<Offer>() {
 
@@ -38,10 +38,13 @@ public class OfferDao {
 
                         Offer offer= new Offer();
 
-                        offer.setId(rs.getInt("id"));
-                        offer.setName(rs.getString("name"));
-                        offer.setEmail(rs.getString("email"));
-                        offer.setText(rs.getString("text"));
+                        offer.setYear(rs.getInt("수강년도"));
+                        offer.setSemester(rs.getInt("학기"));
+                        offer.setSubject_code(rs.getString("교과코드"));
+                        offer.setSubject_name(rs.getString("과목명"));
+                        offer.setSubject_classification(rs.getString("교과구분"));
+                        offer.setProfessor(rs.getString("담당교수"));
+                        offer.setGrades(rs.getInt("학점"));
 
                         return offer;
                     }
@@ -52,7 +55,7 @@ public class OfferDao {
     // cRud method
     public List<Offer> getOffers() {
 
-        String sqlStatement= "select * from offers";
+        String sqlStatement= "select * from courses";
         return jdbcTemplate.query(sqlStatement, new RowMapper<Offer>() {
 
             @Override
@@ -60,10 +63,13 @@ public class OfferDao {
 
                 Offer offer= new Offer();
 
-                offer.setId(rs.getInt("id"));
-                offer.setName(rs.getString("name"));
-                offer.setEmail(rs.getString("email"));
-                offer.setText(rs.getString("text"));
+                offer.setYear(rs.getInt("수강년도"));
+                offer.setSemester(rs.getInt("학기"));
+                offer.setSubject_code(rs.getString("교과코드"));
+                offer.setSubject_name(rs.getString("과목명"));
+                offer.setSubject_classification(rs.getString("교과구분"));
+                offer.setProfessor(rs.getString("담당교수"));
+                offer.setGrades(rs.getInt("학점"));
 
                 return offer;
             }
@@ -73,33 +79,47 @@ public class OfferDao {
 
     // Crud method
     public boolean insert(Offer offer) {
+        int Year = offer.getYear();
+        int Semester = offer.getSemester();
+        String subject_code = offer.getSubject_code();
+        String Subject_name = offer.getSubject_name();
+        String Subject_classification = offer.getSubject_classification();
+        String Professor = offer.getProfessor();
+        int Grades = offer.getGrades();
 
-        String name= offer.getName();
-        String email= offer.getEmail();
-        String text = offer.getText();
+        String sqlStatement= "insert into courses" +
+                "(year, Semester, subject_code, Subject_name," +
+                "Subject_classification, Professor, Grades) values (?,?,?,?,?,?,?)";
 
-        String sqlStatement= "insert into offers (name, email, text) values (?,?,?)";
-
-        return (jdbcTemplate.update(sqlStatement, new Object[] {name, email, text}) == 1);
+        return (jdbcTemplate.update(sqlStatement,
+                new Object[] {Year, Semester, subject_code, Subject_name, Subject_classification, Professor, Grades}) == 1);
     }
 
     // crUd method
     public boolean update(Offer offer) {
 
-        int id = offer.getId();
-        String name= offer.getName();
-        String email= offer.getEmail();
-        String text = offer.getText();
+        int Year = offer.getYear();
+        int Semester = offer.getSemester();
+        String Subject_code = offer.getSubject_code();
+        String Subject_name = offer.getSubject_name();
+        String Subject_classification = offer.getSubject_classification();
+        String Professor = offer.getProfessor();
+        int Grades = offer.getGrades();
 
-        String sqlStatement= "update offers set name=?, email=?, text=? where id=?";
+        String sqlStatement=
+                "update courses set Year=?, Semester=?, Subject_code=?," +
+                        "Subject_name = ?, Subject_classification = ?," +
+                        "Professor = ?, Grades = ? where id=?";
 
-        return (jdbcTemplate.update(sqlStatement, new Object[] {name, email, text, id}) == 1);
+        return (jdbcTemplate.update(sqlStatement,
+                new Object[] {Year, Semester, Subject_code, Subject_name, Subject_classification, Professor, Grades}) == 1);
     }
 
     //cruD method
     public boolean delete(int id) {
-        String sqlStatement= "delete from offers where id=?";
+        String sqlStatement= "delete from courses where id=?";
         return (jdbcTemplate.update(sqlStatement, new Object[] {id}) == 1);
     }
+
 
 }

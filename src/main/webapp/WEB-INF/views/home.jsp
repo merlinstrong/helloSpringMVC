@@ -13,8 +13,9 @@
     <title>$Title$</title>
   </head>
   <body>
-    <p> <a href="${pageContext.request.contextPath}/offers"> Show current offers</a></p>
-    <p> <a href="${pageContext.request.contextPath}/createoffer"> Add a new offer</a></p>
+  <p> <a href="${pageContext.request.contextPath}/login"> login</a></p>
+    <p> <a href="${pageContext.request.contextPath}/offers"> 학년별 이수학점 조회</a></p>
+    <p> <a href="${pageContext.request.contextPath}/createoffer"> 수강신청</a></p>
 
     <c:if test="${pageContext.request.userPrincipal.name != null}">
       <a href="javascript:document.getElementById('logout').submit()">Logout</a>

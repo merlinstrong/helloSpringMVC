@@ -13,16 +13,22 @@ import javax.validation.constraints.Size;
 @Setter
 @ToString
 @NoArgsConstructor
+
 public class Offer {
-    private int id;
+    private int year;
 
-    @Size(min=2, max=100, message = "Name must be between 2 and 100 chars")
-    private String name;
+    private int semester;
 
-    @Email(message="Please provide a valid email address")
-    @NotEmpty(message="The email address cannot be empty")
-    private String email;
+    @Size(min=2, max=100, message = "subject_code must be between 2 and 100 chars")
+    private String subject_code;
 
-    @Size(min=5, max=100, message="Text must be between 5 and 100 chars")
-    private String text;
+    @Email(message="Please provide a valid Subject_name address")
+    private String subject_name;
+
+    @Size(min=5, max=100, message="Subject_classification must be between 5 and 100 chars")
+    private String subject_classification;
+
+    private String professor;
+
+    private int grades;
 }
