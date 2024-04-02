@@ -27,18 +27,11 @@ public class LoginController {
 
 
     @GetMapping("/login")
-    public String showLogin(@RequestParam("username") String username,
-                            @RequestParam("password") String password,
-                            @RequestParam(value="error", required = false) String error,
+    public String showLogin( @RequestParam(value="error", required = false) String error,
                             @RequestParam(value="logout", required = false) String logout,
                             Model model) {
 
-        System.out.println("GetMapping"+username+password);
-
-
-        List<User> users = loginService.getAllUsers();
-
-        model.addAttribute("user", new User());
+                model.addAttribute("user", new User());
 
 //        for (User user : users) {
 //            System.out.println(user);
