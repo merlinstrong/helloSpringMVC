@@ -12,8 +12,7 @@
 </head>
 <body>
 
-새로운 제안을 하였습니다. 감사합니다.
-<a href="${pageContext.request.contextPath}/offers"> Click here to view current offers  </a>
-
+수강신청이 완료되었습니다
+<a href="${pageContext.request.contextPath}/createoffer"> 추가 신청 </a>
 </body>
 </html>

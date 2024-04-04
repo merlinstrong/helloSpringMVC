@@ -15,7 +15,7 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 
 public class SemesterCredits {
-    private int year;
+    private String year;
 
     private int semester;
 

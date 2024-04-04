@@ -28,9 +28,6 @@ public class OfferController {
 
         List<SemesterCredits> semesterCredits = new ArrayList<>();
 
-        // 년도(year)로 먼저 오름차순 정렬하고, 같은 년도 내에서는 학기(semester)로 오름차순 정렬
-        offers.sort(Comparator.comparingInt(Offer::getYear)
-                .thenComparingInt(Offer::getSemester));
 
         Map<Integer, int[]> totalSemesterCredits = new HashMap<>();
         totalSemesterCredits.put(2016, new int[]{0, 0});
@@ -61,7 +58,7 @@ public class OfferController {
                 // 총학점이 0인 경우, 리스트에 추가하지 않습니다.
                 if (totalCredits > 0) {
                     SemesterCredits sc = new SemesterCredits();
-                    sc.setYear(year);
+                    sc.setYear(String.valueOf(year));
                     sc.setSemester(semester);
                     sc.setTotalSemesterCredits(totalCredits);
                     // details 필드는 여기서는 설정하지 않았습니다. 필요한 경우 추가 정보를 설정할 수 있습니다.
@@ -71,7 +68,12 @@ public class OfferController {
                 }
             }
         }
+        SemesterCredits sc_end = new SemesterCredits();
 
+        Integer myNumber = null;
+
+        sc_end.setYear("총계");
+        sc_end.setTotalSemesterCredits(myNumber);
 
         model.addAttribute("id_semesterCredits", semesterCredits);
 
@@ -123,10 +125,12 @@ public class OfferController {
             return "createoffer";
         }
         offer.setYear(2024);
-        offer.setSemester(1);
+        offer.setSemester(2);
+        offer.setSubject_code("미정");
         System.out.println(offer);
+
         // Controller -> Service -> Dao
-//         offerService.insert(offer);
+         offerService.insert(offer);
 
         return "offercreated";
     }

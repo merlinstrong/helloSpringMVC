@@ -88,8 +88,8 @@ public class OfferDao {
         int Grades = offer.getGrades();
 
         String sqlStatement= "insert into courses" +
-                "(year, semester, subject_code, Subject_name," +
-                "Subject_classification, Professor, Grades) values (?,?,?,?,?,?,?)";
+                "(수강년도, 학기, 교과코드, 과목명," +
+                "교과구분, 담당교수, 학점) values (?,?,?,?,?,?,?)";
 
         return (jdbcTemplate.update(sqlStatement,
                 new Object[] {year, semester, subject_code, Subject_name, Subject_classification, Professor, Grades}) == 1);
