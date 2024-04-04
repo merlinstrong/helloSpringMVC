@@ -33,10 +33,6 @@ public class LoginController {
 
                 model.addAttribute("user", new User());
 
-//        for (User user : users) {
-//            System.out.println(user);
-//        }
-
         if(error != null) {
             model.addAttribute("errorMsg","Invalid username or password");
         }
@@ -47,14 +43,5 @@ public class LoginController {
 
         return "login";
     }
-
-//    @PostMapping ("/login")
-//    public String processLogin(@RequestParam("username") String username,
-//                               @RequestParam("password") String password,
-//                               Model model){
-//        System.out.println("PostMapping"+username+password);
-//
-//        return "login";
-//    }
 
 }

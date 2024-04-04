@@ -79,8 +79,8 @@ public class OfferDao {
 
     // Crud method
     public boolean insert(Offer offer) {
-        int Year = offer.getYear();
-        int Semester = offer.getSemester();
+        int year = offer.getYear();
+        int semester = offer.getSemester();
         String subject_code = offer.getSubject_code();
         String Subject_name = offer.getSubject_name();
         String Subject_classification = offer.getSubject_classification();
@@ -88,11 +88,11 @@ public class OfferDao {
         int Grades = offer.getGrades();
 
         String sqlStatement= "insert into courses" +
-                "(year, Semester, subject_code, Subject_name," +
+                "(year, semester, subject_code, Subject_name," +
                 "Subject_classification, Professor, Grades) values (?,?,?,?,?,?,?)";
 
         return (jdbcTemplate.update(sqlStatement,
-                new Object[] {Year, Semester, subject_code, Subject_name, Subject_classification, Professor, Grades}) == 1);
+                new Object[] {year, semester, subject_code, Subject_name, Subject_classification, Professor, Grades}) == 1);
     }
 
     // crUd method

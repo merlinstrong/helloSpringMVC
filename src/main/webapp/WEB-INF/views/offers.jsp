@@ -31,7 +31,7 @@
             <td><c:out value="${semesterCredits.year}" /></td>
             <td><c:out value="${semesterCredits.semester}" /></td>
             <td><c:out value="${semesterCredits.totalSemesterCredits}" /></td>
-            <td><a href="${pageContext.request.contextPath}/login">상세보기</a></td>
+            <td><a href="${pageContext.request.contextPath}/details?year=${semesterCredits.year}&semester=${semesterCredits.semester}">상세보기</a></td>
         </tr>
     </c:forEach>
     </tbody>

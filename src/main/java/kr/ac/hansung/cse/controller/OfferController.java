@@ -10,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
 import java.util.*;
@@ -24,6 +25,7 @@ public class OfferController {
     @GetMapping("/offers")
     public String showOffers(Model model) {
         List<Offer> offers = offerService.getAllOffers();
+
         List<SemesterCredits> semesterCredits = new ArrayList<>();
 
         // 년도(year)로 먼저 오름차순 정렬하고, 같은 년도 내에서는 학기(semester)로 오름차순 정렬
@@ -52,7 +54,7 @@ public class OfferController {
             int year = entry.getKey();
             int[] creditsArray = entry.getValue();
 
-// 1학기와 2학기에 대해서 반복하여 SemesterCredits 객체를 생성하고 리스트에 추가합니다.
+            // 1학기와 2학기에 대해서 반복하여 SemesterCredits 객체를 생성하고 리스트에 추가합니다.
             for (int semester = 1; semester <= creditsArray.length; semester++) {
                 int totalCredits = creditsArray[semester - 1];
 
@@ -70,13 +72,6 @@ public class OfferController {
             }
         }
 
-        // semesterCredits 리스트에 저장된 모든 SemesterCredits 객체의 정보를 출력하는 반복문
-        for (SemesterCredits sc : semesterCredits) {
-            System.out.println("Year: " + sc.getYear() +
-                    ", Semester: " + sc.getSemester() +
-                    ", Total Semester Credits: " + sc.getTotalSemesterCredits() +
-                    ", Details: " + sc.getDetails());
-        }
 
         model.addAttribute("id_semesterCredits", semesterCredits);
 
@@ -85,11 +80,23 @@ public class OfferController {
     }
 
     @GetMapping("/details")
-    public String createdetails(Model model) {
+    public String getDetails(@RequestParam("year") int year,
+                             @RequestParam("semester") int semester, Model model) {
 
-        model.addAttribute("offer", new Offer());
+        List<Offer> offers = offerService.getAllOffers();
+        List<Offer> filteredOffers = new ArrayList<>();
 
-        return "details";
+        for (Offer offer : offers) {
+            if (offer.getYear() == year && offer.getSemester() == semester) {
+                filteredOffers.add(offer);
+            }
+        }
+
+        model.addAttribute("id_offer", filteredOffers);
+
+        // 반환하는 뷰 이름을 보다 동적으로 설정하거나, 하나의 뷰를 고정적으로 사용할 수 있습니다.
+        // 예시에서는 단순화를 위해 하나의 뷰 이름을 사용합니다.
+        return "details"; // detailsView.jsp 또는 다른 뷰 템플릿 파일명
     }
 
     @GetMapping("/createoffer")
@@ -103,7 +110,7 @@ public class OfferController {
     @PostMapping("/docreate")
     public String doCreate(Model model, @Valid Offer offer, BindingResult result) {
 
-        // System.out.println(offer);
+
         if(result.hasErrors()) {
             System.out.println("== Form data does not validated ==");
 
@@ -115,9 +122,11 @@ public class OfferController {
 
             return "createoffer";
         }
-
+        offer.setYear(2024);
+        offer.setSemester(1);
+        System.out.println(offer);
         // Controller -> Service -> Dao
-        offerService.insert(offer);
+//         offerService.insert(offer);
 
         return "offercreated";
     }

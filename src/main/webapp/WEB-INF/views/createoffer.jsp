@@ -19,21 +19,27 @@
 <sf:form method="post" action="${pageContext.request.contextPath}/docreate" modelAttribute="offer">
     <table class="formtable">
         <tr>
-            <td class="label"> Name:</td>
-            <td><sf:input class="control" type="text" path="name"/>  <br/>
-                <sf:errors path="name" class="error"/>
+            <td class="label"> 교과목명:</td>
+            <td><sf:input class="control" type="text" path="subject_name"/>  <br/>
+                <sf:errors path="subject_name" class="error"/>
             </td>
         </tr>
         <tr>
-            <td class="label"> Email:</td>
-            <td><sf:input class="control" type="text" path="email"/> <br/>
-                <sf:errors path="email" class="error" />
+            <td class="label"> 교과구분:</td>
+            <td><sf:input class="control" type="text" path="subject_classification"/> <br/>
+                <sf:errors path="subject_classification" class="error" />
             </td>
         </tr>
         <tr>
-            <td class="label"> Offer:</td>
-            <td><sf:textarea class="control" rows="10" cols="10" path="text"/> <br/>
-                <sf:errors path="text" class="error" />
+            <td class="label"> 담당교수:</td>
+            <td><sf:textarea class="control" rows="10" cols="10" path="professor"/> <br/>
+                <sf:errors path="professor" class="error" />
+            </td>
+        </tr>
+        <tr>
+            <td class="label"> 학점:</td>
+            <td><sf:textarea class="control" rows="10" cols="10" path="grades"/> <br/>
+                <sf:errors path="grades" class="error" />
             </td>
         </tr>
         <tr>
