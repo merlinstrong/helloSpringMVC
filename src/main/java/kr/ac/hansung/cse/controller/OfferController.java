@@ -24,7 +24,7 @@ public class OfferController {
 
     @GetMapping("/offers")
     public String showOffers(Model model) {
-        // 모든 제안을 가져옵니다.
+        //  coureses 테이블로부터 모든 수강정보을 가져옵니다.
         List<Offer> offers = offerService.getAllOffers();
 
         // 학기별 학점 정보를 저장할 리스트를 초기화합니다.
@@ -72,7 +72,7 @@ public class OfferController {
             }
         }
 
-        // 학점 총합 정보를 리스트에 추가합니다.
+        // 학점 총계를 리스트에 추가합니다.
         SemesterCredits sc_end = new SemesterCredits();
         sc_end.setYear("총계");
         sc_end.setTotalSemesterCredits(totalCreditsSum);
@@ -88,21 +88,25 @@ public class OfferController {
     @GetMapping("/details")
     public String getDetails(@RequestParam("year") int year,
                              @RequestParam("semester") int semester, Model model) {
-
+        // 파라미터로 원하는 년도와 학기를 입력받습니다.
+        // courses 테이블에 모든 수강정보를 가져옵니다.
         List<Offer> offers = offerService.getAllOffers();
+        // 특정 연도와 학기에 해당하는 수강정보를 필터링하기 위한 리스트입니다.
         List<Offer> filteredOffers = new ArrayList<>();
 
+        // 모든 수강정보를 순회하며, 요청된 연도와 학기에 해당하는 수강정보만을 선택합니다.
         for (Offer offer : offers) {
             if (offer.getYear() == year && offer.getSemester() == semester) {
                 filteredOffers.add(offer);
             }
         }
 
+        // 모델에 필터링된 리스트를 추가합니다. 이는 뷰에서 사용됩니다.
         model.addAttribute("id_offer", filteredOffers);
 
-        // 반환하는 뷰 이름을 보다 동적으로 설정하거나, 하나의 뷰를 고정적으로 사용할 수 있습니다.
-        // 예시에서는 단순화를 위해 하나의 뷰 이름을 사용합니다.
-        return "details"; // detailsView.jsp 또는 다른 뷰 템플릿 파일명
+        // 'details' 뷰로 사용자를 리디렉션합니다.
+
+        return "details"; // 'details.jsp' 또는 다른 뷰 템플릿 파일명으로 대체 가능
     }
 
     @GetMapping("/createoffer")

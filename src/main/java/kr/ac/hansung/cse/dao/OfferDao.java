@@ -54,15 +54,20 @@ public class OfferDao {
     //query and return multiple objects
     // cRud method
     public List<Offer> getOffers() {
+        // SQL 쿼리문을 정의합니다. 'courses' 테이블에서 모든 레코드를 선택합니다.
+        String sqlStatement = "select * from courses";
 
-        String sqlStatement= "select * from courses";
+        // jdbcTemplate의 query 메서드를 사용하여 SQL 쿼리를 실행합니다.
+        // 결과로 반환된 각 레코드에 대해 RowMapper를 사용하여 Offer 객체로 매핑합니다.
         return jdbcTemplate.query(sqlStatement, new RowMapper<Offer>() {
 
             @Override
             public Offer mapRow(ResultSet rs, int rowNum) throws SQLException {
+                // 새 Offer 객체를 생성합니다.
+                Offer offer = new Offer();
 
-                Offer offer= new Offer();
-
+                // ResultSet에서 값을 가져와 Offer 객체의 속성을 설정합니다.
+                // 각 컬럼명에 해당하는 데이터를 가져와 객체에 설정합니다.
                 offer.setYear(rs.getInt("수강년도"));
                 offer.setSemester(rs.getInt("학기"));
                 offer.setSubject_code(rs.getString("교과코드"));
@@ -71,10 +76,13 @@ public class OfferDao {
                 offer.setProfessor(rs.getString("담당교수"));
                 offer.setGrades(rs.getInt("학점"));
 
+                // 구성된 Offer 객체를 반환합니다.
                 return offer;
             }
         });
     }
+
+
 
 
     // Crud method
@@ -107,9 +115,9 @@ public class OfferDao {
         int Grades = offer.getGrades();
 
         String sqlStatement=
-                "update courses set Year=?, Semester=?, Subject_code=?," +
-                        "Subject_name = ?, Subject_classification = ?," +
-                        "Professor = ?, Grades = ? where id=?";
+                "update courses set 수강년도 =?, 학기 =?, 교과코드 =?," +
+                        "과목명 = ?, 교과구분 = ?," +
+                        "담당교수 = ?, 학점 = ? where id=?";
 
         return (jdbcTemplate.update(sqlStatement,
                 new Object[] {Year, Semester, Subject_code, Subject_name, Subject_classification, Professor, Grades}) == 1);

@@ -25,11 +25,11 @@
         <h2 class="form-signin-heading">Please sign in</h2>
 
         <c:if test="${not empty errorMsg}">
-            <div style="color: #ff0000;"> <h3> ${errorMsg} </h3></div>
+            <div style="color: #0CF591;"> <h3> ${errorMsg} </h3></div>
         </c:if>
 
         <c:if test="${not empty logoutMsg}">
-            <div style="color: #0000ff;" > <h3> ${logoutMsg} </h3></div>
+            <div style="color: #0CF591;" > <h3> ${logoutMsg} </h3></div>
         </c:if>
 
         <p>
