@@ -45,6 +45,8 @@ public class OfferController {
                 credits[semester] += grades;
             }
         }
+        // 학점 총합을 저장할 변수를 초기화합니다.
+        int totalCreditsSum = 0;
 
         // totalSemesterCredits 맵을 순회합니다.
         for (Map.Entry<Integer, int[]> entry : totalSemesterCredits.entrySet()) {
@@ -54,6 +56,9 @@ public class OfferController {
             // 1학기와 2학기에 대해서 반복하여 SemesterCredits 객체를 생성하고 리스트에 추가합니다.
             for (int semester = 1; semester <= creditsArray.length; semester++) {
                 int totalCredits = creditsArray[semester - 1];
+
+                // 학점 총합에 현재 학점을 더합니다.
+                totalCreditsSum += totalCredits;
 
                 // 총학점이 0인 경우, 리스트에 추가하지 않습니다.
                 if (totalCredits > 0) {
@@ -70,10 +75,12 @@ public class OfferController {
         }
         SemesterCredits sc_end = new SemesterCredits();
 
-        Integer myNumber = null;
 
         sc_end.setYear("총계");
-        sc_end.setTotalSemesterCredits(myNumber);
+        sc_end.setTotalSemesterCredits(totalCreditsSum);
+
+        // 리스트의 마지막에 sc_end 객체 추가
+        semesterCredits.add(sc_end);
 
         model.addAttribute("id_semesterCredits", semesterCredits);
 
@@ -127,7 +134,6 @@ public class OfferController {
         offer.setYear(2024);
         offer.setSemester(2);
         offer.setSubject_code("미정");
-        System.out.println(offer);
 
         // Controller -> Service -> Dao
          offerService.insert(offer);

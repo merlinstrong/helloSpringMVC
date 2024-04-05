@@ -25,15 +25,29 @@
     </thead>
     <!-- 테이블 바디 -->
     <tbody>
-    <c:forEach var="semesterCredits" items="${id_semesterCredits}">
-        <tr>
+    <c:forEach var="semesterCredits" items="${id_semesterCredits}" varStatus="status">
+        <!-- 마지막 항목이 아닌 경우 -->
+        <c:if test="${!status.last}">
+            <tr>
+                <td><c:out value="${semesterCredits.year}" /></td>
+                <td><c:out value="${semesterCredits.semester}" /></td>
+                <td><c:out value="${semesterCredits.totalSemesterCredits}" /></td>
+                <td><a href="${pageContext.request.contextPath}/details?year=${semesterCredits.year}&semester=${semesterCredits.semester}">상세보기</a></td>
+            </tr>
+        </c:if>
 
-            <td><c:out value="${semesterCredits.year}" /></td>
-            <td><c:out value="${semesterCredits.semester}" /></td>
-            <td><c:out value="${semesterCredits.totalSemesterCredits}" /></td>
-            <td><a href="${pageContext.request.contextPath}/details?year=${semesterCredits.year}&semester=${semesterCredits.semester}">상세보기</a></td>
-        </tr>
+        <!-- 마지막 항목인 경우 -->
+        <c:if test="${status.last}">
+            <tr>
+                <!-- 마지막 항목에 대한 다른 내용을 여기에 작성합니다. -->
+                <td>총계</td>
+                <td> </td>
+                <td><c:out value="${semesterCredits.totalSemesterCredits}" /></td>
+                <td> </td>
+            </tr>
+        </c:if>
     </c:forEach>
+
     </tbody>
     </table>
 </body>
